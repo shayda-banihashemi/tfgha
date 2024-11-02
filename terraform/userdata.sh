@@ -1,7 +1,7 @@
 #!/bin/bash
-sudo apt-get update -y
-sudo apt-get install python3 -y
-sudo apt-get install git -y
+sudo yum update -y
+sudo yum install python3 -y
+sudo yum install git -y
 
 mkdir -p /app
 cp ./hello.py /app/hello.py
