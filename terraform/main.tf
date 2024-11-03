@@ -11,21 +11,6 @@ terraform {
   }
 }
 
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ec2:*",
-                "iam:*",
-                "s3:*"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-
 data "aws_ami" "amazon_linux_2" {
   most_recent = true
   owners      = ["amazon"]
