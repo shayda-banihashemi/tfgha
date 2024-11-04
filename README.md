@@ -9,9 +9,10 @@ Before you can use this workflow, you need to set up these GitHub Secrets:
 To use this example:
 
 	1.	Create a new GitHub repository
-	2.	Add the files as shown above
-	3.	Add your AWS credentials as GitHub Secrets
-	4.	Push the code to the main branch
+	1.	Add the files as shown above
+	1.	Add your AWS credentials as GitHub Secrets
+    1. run `aws sts get-caller-identity`
+	1.	Push the code to the main branch
 The workflow will:
 
 	1.	Trigger when you push to the main branch
