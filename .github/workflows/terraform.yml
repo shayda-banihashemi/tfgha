@@ -56,7 +56,7 @@ jobs:
         run: terraform apply -auto-approve tfplan
         working-directory: terraform
 
-      - name: Wait for 5 minutes
+      - name: Wait for 2 minutes
         run: sleep 120  # 300 seconds equals 5 minutes
 
       - name: Destroy Terraform
