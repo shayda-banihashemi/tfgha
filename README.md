@@ -41,4 +41,6 @@ http://<EC2_PUBLIC_IP>:8080
 # IMPORTANT
 To destroy the infrastructure, run terraform destroy locally.
 
-Steps to be defined later in a video. now works remote but not locally
+Steps to be defined later in a video. now works remote and autodeletes
+
+CARE WHERE YOU PUT SECRETS - MUST BE IN REPO (not env)
