@@ -7,7 +7,14 @@ Before you can use this workflow, you need to set up these GitHub Secrets:
 	▪	AWS_ACCESS_KEY_ID
 	▪	AWS_SECRET_ACCESS_KEY
 To use this example:
-
+Get an instance id:
+```aiignore
+aws ec2 describe-images \
+    --owners amazon \
+    --filters "Name=name,Values=al2023-ami-*" "Name=architecture,Values=x86_64" \
+    --query "sort_by(Images, &CreationDate)[-1].ImageId" \
+    --output text
+```
 	1.	Create a new GitHub repository
 	1.	Add the files as shown above
     1.  Add this to gha yml files:
