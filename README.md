@@ -40,3 +40,5 @@ http://<EC2_PUBLIC_IP>:8080
 
 # IMPORTANT
 To destroy the infrastructure, run terraform destroy locally.
+
+Steps to be defined later in a video
