@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v3
 
       - name: Echo AWS Access Key (Debug Step)
         run: echo ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -57,7 +57,7 @@ jobs:
         working-directory: terraform
 
       - name: Wait for 5 minutes
-        run: sleep 300  # 300 seconds equals 5 minutes
+        run: sleep 120  # 300 seconds equals 5 minutes
 
       - name: Destroy Terraform
         run: terraform destroy -auto-approve
