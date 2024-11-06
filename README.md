@@ -10,6 +10,12 @@ To use this example:
 
 	1.	Create a new GitHub repository
 	1.	Add the files as shown above
+    1.  Add this to gha yml files:
+                ```
+                - name: Terraform Plan
+                run: terraform plan
+                working-directory: terraform
+                ```
 	1.	Add your AWS credentials as GitHub Secrets
     1. run `aws sts get-caller-identity`
 	1.	Push the code to the main branch
