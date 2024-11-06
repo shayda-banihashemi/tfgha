@@ -39,7 +39,7 @@ After deployment, you can access your Hello World server at:
 http://<EC2_PUBLIC_IP>:8080
 
 # IMPORTANT
-To destroy the infrastructure, run terraform destroy locally.
+To destroy the infrastructure when deploying manually (not via action), run terraform destroy locally.
 
 Steps to be defined later in a video. now works remote and autodeletes
 
