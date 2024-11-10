@@ -2,7 +2,7 @@
 name = "tfgha"
 version = "0.1.0"
 description = ""
-authors = ["Andy Miles <akmiles@icloud.com>"]
+authors = ["Shayda Banihashemi <shayda.dev@icloud.com>"]
 readme = "README.md"
 packages = [{include = "tfgha", from = "src"}]
 
