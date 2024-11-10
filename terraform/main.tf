@@ -2,34 +2,65 @@ provider "aws" {
   region = "us-west-2"
 }
 
-resource "aws_instance" "example" {
+resource "aws_instance" "py_server" {
   ami           = "ami-0709112b97e5accb1"
   instance_type = "t2.micro"
-
+  vpc_security_group_ids = [aws_security_group.allow_app.id]
   user_data = <<-EOF
             #!/bin/bash
             yum update -y
-            yum install -y python3 git
+            yum install -y python3 python3-pip
+            mkdir /app
+            cat <<EOT > /app/app.py
+            from flask import Flask
+            app = Flask(__name__)
 
-            # Clone your git repository (ensure it's public or handle git authentication accordingly)
-            #cd /home/ec2-user
-            #git clone https://github.com/your_username/your_repository.git
+            @app.route('/')
+            def hello():
+                return "Hello from Python!"
 
-            # Navigate to the repository
-            #cd your_repository
+            if __name__ == '__main__':
+                app.run(host='0.0.0.0', port=5000)
+            EOT
 
-            # Optionally, create a virtual environment
-            #python3 -m venv venv
-            #source venv/bin/activate
+            pip3 install flask
 
-            # Install any required dependencies from requirements.txt
-            #pip install -r requirements.txt
-
-            # Run your Python script
-            python3 -c "import http.server; import socketserver; PORT = 8080; Handler = http.server.SimpleHTTPRequestHandler; with socketserver.TCPServer(('', PORT), Handler) as httpd: print('Serving HTTP on port', PORT); httpd.serve_forever()"
+            # Run app
+            python3 /app/app.py &
             EOF
 
   tags = {
     Name = "GitHubActionsEC2"
   }
+}
+resource "aws_security_group" "allow_app" {
+  name        = "allow_app"
+  description = "Allow inbound traffic for Python app"
+
+  ingress {
+    description = "App Port"
+    from_port   = 5000
+    to_port     = 5000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+output "public_ip" {
+  value = aws_instance.py_server.public_ip
 }
