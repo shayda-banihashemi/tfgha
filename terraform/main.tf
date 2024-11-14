@@ -9,20 +9,13 @@ resource "aws_instance" "py_server" {
   user_data = <<-EOF
             #!/bin/bash
             yum update -y
-            yum install -y python3 python3-pip
+            yum install -y python3 python3-pip git curl
+            curl -sSL https://install.python-poetry.org | python3 -
+            export PATH="$HOME/.local/bin:$PATH"
             mkdir /app
-            cat <<EOT > /app/app.py
-            from flask import Flask
-            app = Flask(__name__)
 
-            @app.route('/')
-            def hello():
-                return "Hello from Python!"
-            if __name__ == '__main__':
-                app.run(host='0.0.0.0', port=5000)
-            EOT
-            pip3 install flask
-            python3 /app/app.py &
+            chmod +x ./bin/deploy
+            ./bin/deploy
             EOF
 
   tags = {
