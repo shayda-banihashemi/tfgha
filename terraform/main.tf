@@ -27,6 +27,7 @@ resource "aws_instance" "py_server" {
             cd /app/tfgha
             \$HOME/.local/bin/poetry install
             \$HOME/.local/bin/poetry run /app/tfgha/src/tfgha/app.py
+
   EOF
   tags = {
     Name = "GitHubActionsEC2"
