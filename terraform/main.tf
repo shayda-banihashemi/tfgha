@@ -10,7 +10,8 @@ resource "aws_instance" "py_server" {
             #!/bin/bash
             yum update -y
             yum install -y python3 python3-pip git curl
-            curl -sSL https://install.python-poetry.org | python3 -
+            pip3 install --User poetry
+            # curl -sSL https://install.python-poetry.org | python3 -
             export PATH="\$HOME/.local/bin:\$PATH"
             mkdir /app
             cd /app && git clone https://github.com/proquickly/tfgha.git
