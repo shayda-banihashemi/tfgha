@@ -8,16 +8,25 @@ resource "aws_instance" "py_server" {
   vpc_security_group_ids = [aws_security_group.allow_app.id]
   user_data = <<-EOF
             #!/bin/bash
+            exec > /var/log/user-data.log 2>&1
+            set -x
+
             yum update -y
             yum install -y python3 python3-pip git curl
-            pip3 install --User poetry
-            # curl -sSL https://install.python-poetry.org | python3 -
+
+            pip3 install --user poetry
+
             export PATH="\$HOME/.local/bin:\$PATH"
-            mkdir /app
-            cd /app && git clone https://github.com/proquickly/tfgha.git
+
+            mkdir -p /app
+            cd /app
+
+            git clone https://github.com/proquickly/tfgha.git
+
             chmod +x /app/tfgha/bin/deploy
-            cd /app/tfgha && \$HOME/.local/bin/poetry install
-            cd /app/tfgha && \$HOME/.local/bin/poetry run /app/tfgha/src/tfgha/app.py
+            cd /app/tfgha
+            \$HOME/.local/bin/poetry install
+            \$HOME/.local/bin/poetry run /app/tfgha/src/tfgha/app.py
   EOF
   tags = {
     Name = "GitHubActionsEC2"
