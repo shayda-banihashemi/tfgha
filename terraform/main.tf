@@ -13,8 +13,9 @@ resource "aws_instance" "py_server" {
             curl -sSL https://install.python-poetry.org | python3 -
             export PATH="$HOME/.local/bin:$PATH"
             mkdir /app
-            chmod +x ./bin/deploy
-            ./bin/deploy
+            cd /app && git clone git@github.com:proquickly/tfgha.git
+            chmod +x /app/tfgha/bin/deploy
+            /app/tfgha/bin/deploy
             EOF
   tags = {
     Name = "GitHubActionsEC2"
