@@ -1,4 +1,4 @@
 #!/bin/sh
 cd /app && git clone git@github.com:proquickly/tfgha.git
 cd /app/tfgha && "$HOME/.local/bin/poetry" install
-cd /app/tfgha && "$HOME/.local/bin/poetry" shell && "$HOME/.local/bin/poetry" run ./src/thgha/app.py
+cd /app/tfgha && "$HOME/.local/bin/poetry" shell && "$HOME/.local/bin/poetry" run ./src/tfgha/app.py
