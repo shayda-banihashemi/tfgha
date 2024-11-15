@@ -15,7 +15,10 @@ resource "aws_instance" "py_server" {
             mkdir /app
             cd /app && git clone git@github.com:proquickly/tfgha.git
             chmod +x /app/tfgha/bin/deploy
-            /app/tfgha/bin/deploy
+            # /app/tfgha/bin/deploy
+            cd /app/tfgha && "$HOME/.local/bin/poetry" install
+            cd /app/tfgha && "$HOME/.local/bin/poetry" shell && "$HOME/.local/bin/poetry" run /app/tfgha/src/tfgha/app.py
+
             EOF
   tags = {
     Name = "GitHubActionsEC2"
