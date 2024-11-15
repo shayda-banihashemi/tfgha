@@ -11,23 +11,21 @@ resource "aws_instance" "py_server" {
             yum update -y
             yum install -y python3 python3-pip git curl
             curl -sSL https://install.python-poetry.org | python3 -
-            export PATH="$HOME/.local/bin:$PATH"
+            export PATH="\$HOME/.local/bin:\$PATH"
             mkdir /app
-            cd /app && git clone git@github.com:proquickly/tfgha.git
+            cd /app && git clone https://github.com/proquickly/tfgha.git
             chmod +x /app/tfgha/bin/deploy
-            # /app/tfgha/bin/deploy
-            cd /app/tfgha && "$HOME/.local/bin/poetry" install
-            cd /app/tfgha && "$HOME/.local/bin/poetry" shell && "$HOME/.local/bin/poetry" run /app/tfgha/src/tfgha/app.py
-
-            EOF
+            cd /app/tfgha && \$HOME/.local/bin/poetry install
+            cd /app/tfgha && \$HOME/.local/bin/poetry shell && \$HOME/.local/bin/poetry run /app/tfgha/src/tfgha/app.py
+  EOF
   tags = {
     Name = "GitHubActionsEC2"
   }
 }
+
 resource "aws_security_group" "allow_app" {
   name        = "allow_app"
   description = "Allow inbound traffic for Python app"
-
   ingress {
     description = "App Port"
     from_port   = 5000
@@ -35,7 +33,6 @@ resource "aws_security_group" "allow_app" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   ingress {
     description = "SSH"
     from_port   = 22
@@ -43,7 +40,6 @@ resource "aws_security_group" "allow_app" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   egress {
     from_port   = 0
     to_port     = 0
