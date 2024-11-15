@@ -16,7 +16,6 @@ resource "aws_instance" "py_server" {
             chmod +x ./bin/deploy
             ./bin/deploy
             EOF
-
   tags = {
     Name = "GitHubActionsEC2"
   }
