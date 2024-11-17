@@ -7,9 +7,6 @@ resource "aws_instance" "py_server" {
   instance_type = "t2.micro"
   vpc_security_group_ids = [aws_security_group.allow_app.id]
 
-  # Add IAM role if needed
-  # iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
-
   user_data = <<-EOF
               #!/bin/bash
               exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
