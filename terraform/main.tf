@@ -116,12 +116,6 @@ resource "aws_security_group" "allow_app" {
   }
 }
 
-# Add CloudWatch logging if needed
-resource "aws_cloudwatch_log_group" "app_logs" {
-  name              = "/ec2/flask-app"
-  retention_in_days = 14
-}
-
 output "public_ip" {
   value = aws_instance.py_server.public_ip
 }
