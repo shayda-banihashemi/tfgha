@@ -84,6 +84,9 @@ resource "aws_instance" "py_server" {
 resource "aws_security_group" "allow_app" {
   name        = "allow_app"
   description = "Allow inbound traffic for Python app"
+  lifecycle {
+    create_before_destroy = true
+  }
 
   ingress {
     description = "App Port"
