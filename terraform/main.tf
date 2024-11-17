@@ -21,9 +21,9 @@ resource "aws_instance" "py_server" {
             git clone https://github.com/proquickly/tfgha.git
 
             # chmod +x /app/tfgha/bin/deploy
-            cd /app/tfgha
+            cd tfgha
             poetry install
-            poetry run python3 /app/tfgha/src/tfgha/app.py
+            poetry run python /app/tfgha/src/tfgha/app.py
 
   EOF
   tags = {
