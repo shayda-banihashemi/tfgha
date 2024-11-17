@@ -74,7 +74,6 @@ resource "aws_instance" "py_server" {
     Name = "GitHubActionsEC2"
   }
 
-  # Add root volume configuration if needed
   root_block_device {
     volume_size = 20
     volume_type = "gp2"
