@@ -23,8 +23,9 @@ resource "aws_instance" "py_server" {
             # chmod +x /app/tfgha/bin/deploy
             cd tfgha
             poetry install
+            poetry lock
             poetry run python3 /app/tfgha/src/tfgha/app.py
-
+            FLASK_APP=/app/tfgha/src/tfgha/app.py flask run --host=0.0.0.0 --port=5000
   EOF
   tags = {
     Name = "GitHubActionsEC2"
