@@ -13,11 +13,8 @@ resource "aws_instance" "py_server" {
 
             yum update -y
             yum install -y python3 python3-pip git curl
-
-            pip3 install --user poetry
-
             export PATH="\$HOME/.local/bin:\$PATH"
-
+            pip3 install --user poetry
             mkdir -p /app
             cd /app
 
