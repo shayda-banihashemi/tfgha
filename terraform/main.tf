@@ -74,10 +74,6 @@ resource "aws_instance" "py_server" {
     Name = "GitHubActionsEC2"
   }
 
-  root_block_device {
-    volume_size = 20
-    volume_type = "gp2"
-  }
 }
 
 resource "aws_security_group" "allow_app" {
