@@ -23,7 +23,7 @@ resource "aws_instance" "py_server" {
             # chmod +x /app/tfgha/bin/deploy
             cd tfgha
             poetry install
-            poetry run python /app/tfgha/src/tfgha/app.py
+            poetry run python3 /app/tfgha/src/tfgha/app.py
 
   EOF
   tags = {
