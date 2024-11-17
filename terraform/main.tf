@@ -23,7 +23,7 @@ resource "aws_instance" "py_server" {
 
             git clone https://github.com/proquickly/tfgha.git
 
-            chmod +x /app/tfgha/bin/deploy
+            # chmod +x /app/tfgha/bin/deploy
             cd /app/tfgha
             \$HOME/.local/bin/poetry install
             \$HOME/.local/bin/poetry run /app/tfgha/src/tfgha/app.py
