@@ -5,7 +5,6 @@ provider "aws" {
 resource "aws_instance" "py_server" {
   ami           = "ami-06946f6c9b153d494"
   instance_type = "t2.micro"
-  associate_public_ip_address = true  # Add this line to get a public IP
 
   user_data = <<-EOF
               #!/bin/bash
@@ -22,26 +21,8 @@ resource "aws_instance" "py_server" {
               if __name__ == '__main__':
                   app.run(host='0.0.0.0', port=5000)
               EOL
-              chmod +x /home/ubuntu/app/app.py
-              # Create a systemd service file for the Flask app
-              cat <<EOL > /etc/systemd/system/flask-app.service
-              [Unit]
-              Description=Flask App
-              After=network.target
-
-              [Service]
-              User=ubuntu
-              WorkingDirectory=/home/ubuntu/app
-              ExecStart=/usr/bin/python3 app.py
-              Restart=always
-
-              [Install]
-              WantedBy=multi-user.target
-              EOL
-              # Enable and start the service
-              systemctl daemon-reload
-              systemctl enable flask-app
-              systemctl start flask-app
+              cd /home/ubuntu/app
+              nohup python3 app.py &
               EOF
 
   tags = {
@@ -60,13 +41,6 @@ resource "aws_security_group" "allow_http" {
     to_port     = 5000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Consider restricting to your IP
   }
 
   egress {
