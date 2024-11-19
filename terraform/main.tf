@@ -63,11 +63,6 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
-  tags = {
-    Name = "allow_app"
-  }
-}
-
 output "public_ip" {
   value = aws_instance.py_server.public_ip
 }
