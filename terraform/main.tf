@@ -42,7 +42,7 @@ user_data = <<-EOF
 }
 
 resource "aws_security_group" "allow_http" {
-  name        = "allow_http"
+  name        = "allow_http_flask"
   description = "Allow inbound HTTP traffic"
 
   ingress {
