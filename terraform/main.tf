@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "py_server" {
-  ami           = "ami-0709112b97e5accb1"
+  ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
 
 user_data = <<-EOF
@@ -27,8 +27,7 @@ user_data = <<-EOF
               def hello():
                   return "Hello from Python!"
 
-              if __name__ == '__main__':
-                  app.run(host='0.0.0.0', port=5000)
+              app.run(host='0.0.0.0', port=5000)
               EOL
 
               # Change to the application directory and run the app
@@ -61,8 +60,4 @@ resource "aws_security_group" "allow_http" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
-
-output "public_ip" {
-  value = aws_instance.py_server.public_ip
 }
