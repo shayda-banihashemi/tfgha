@@ -10,7 +10,7 @@ resource "aws_instance" "py_server" {
               #!/bin/bash
               sudo apt-get update
               sudo apt-get install -y python3 python3-pip
-              pip3 install flask
+              pip3 install flask requests
               mkdir -p /home/ubuntu/app
               cat <<EOL > /home/ubuntu/app/app.py
               from flask import Flask
@@ -18,10 +18,11 @@ resource "aws_instance" "py_server" {
               @app.route('/')
               def hello():
                   return "Hello from Python!"
-              app.run(host='0.0.0.0', port=5000)
+              if __name__ == '__main__':
+                  app.run(host='0.0.0.0', port=5000)
               EOL
               cd /home/ubuntu/app
-              nohup python3 /home/ubuntu/app/app.py &
+              nohup python3 app.py &
               EOF
 
   tags = {
