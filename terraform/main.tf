@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "py_server" {
-  ami           = "ami-0c55b159cbfafe1f0"
+  ami           = "ami-06946f6c9b153d494"
   instance_type = "t2.micro"
 
 user_data = <<-EOF
