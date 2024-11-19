@@ -39,8 +39,6 @@ user_data = <<-EOF
     Name = "FlaskAppInstance"
   }
 
-  # Define a security group to allow HTTP traffic
-  vpc_security_group_ids = [aws_security_group.allow_http.id]
 }
 
 resource "aws_security_group" "allow_http" {
