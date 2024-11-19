@@ -5,96 +5,52 @@ provider "aws" {
 resource "aws_instance" "py_server" {
   ami           = "ami-0709112b97e5accb1"
   instance_type = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.allow_app.id]
 
-  user_data = <<-EOF
+user_data = <<-EOF
               #!/bin/bash
-              exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+              sudo apt-get update
+              sudo apt-get install -y python3 python3-pip
 
-              # Update system
-              yum update -y
-              yum install -y python3 python3-pip git curl
+              # Install Flask
+              pip3 install flask
 
-              # Install system dependencies
-              yum install -y python3-devel gcc
+              # Create application directory
+              mkdir -p /home/ubuntu/app
 
-              # Create app user
-              useradd -m -s /bin/bash appuser
+              # Write the Python script to a file
+              cat <<EOL > /home/ubuntu/app/app.py
+              from flask import Flask
 
-              # Set up application directory
-              mkdir -p /app
-              chown appuser:appuser /app
+              app = Flask(__name__)
 
-              # Switch to app user
-              su - appuser << 'EOSU'
-              # Set up Python environment
-              python3 -m pip install --user poetry
-              export PATH="$HOME/.local/bin:$PATH"
+              @app.route('/')
+              def hello():
+                  return "Hello from Python!"
 
-              # Clone and set up application
-              cd /app
-              git clone https://github.com/proquickly/tfgha.git
-              cd tfgha
+              if __name__ == '__main__':
+                  app.run(host='0.0.0.0', port=5000)
+              EOL
 
-              # Install dependencies
-              $HOME/.local/bin/poetry install
-              $HOME/.local/bin/poetry lock
-
-              # Create systemd service file
-              sudo tee /etc/systemd/system/flask-app.service << 'EOF2'
-              [Unit]
-              Description=Flask Application
-              After=network.target
-
-              [Service]
-              User=appuser
-              WorkingDirectory=/app/tfgha
-              Environment="PATH=/home/appuser/.local/bin:/usr/local/bin:/usr/bin:/bin"
-              ExecStart=/home/appuser/.local/bin/poetry run flask run --host=0.0.0.0 --port=5000
-              Restart=always
-
-              [Install]
-              WantedBy=multi-user.target
-              EOF2
-              EOSU
-
-              # Set proper permissions
-              chmod 644 /etc/systemd/system/flask-app.service
-
-              # Start and enable the service
-              systemctl daemon-reload
-              systemctl start flask-app
-              systemctl enable flask-app
-
-              # Add logging
-              echo "Setup completed at $(date)" >> /var/log/user-data.log
+              # Change to the application directory and run the app
+              cd /home/ubuntu/app
+              python3 app.py &
               EOF
 
   tags = {
-    Name = "GitHubActionsEC2"
+    Name = "FlaskAppInstance"
   }
 
+  # Define a security group to allow HTTP traffic
+  vpc_security_group_ids = [aws_security_group.allow_http.id]
 }
 
-resource "aws_security_group" "allow_app" {
-  name        = "allow_app"
-  description = "Allow inbound traffic for Python app"
-  lifecycle {
-    create_before_destroy = true
-  }
+resource "aws_security_group" "allow_http" {
+  name        = "allow_http"
+  description = "Allow inbound HTTP traffic"
 
   ingress {
-    description = "App Port"
     from_port   = 5000
     to_port     = 5000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -105,6 +61,7 @@ resource "aws_security_group" "allow_app" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
 
   tags = {
     Name = "allow_app"
