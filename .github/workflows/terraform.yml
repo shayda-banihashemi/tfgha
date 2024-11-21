@@ -11,10 +11,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
 
       - name: Echo AWS Access Key (Debug Step)
         run: echo ${{ secrets.AWS_ACCESS_KEY_ID }}
