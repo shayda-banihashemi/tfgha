@@ -12,11 +12,15 @@ resource "aws_instance" "py_server" {
               sudo apt-get install -y python3 python3-pip
               pip3 install flask requests
               mkdir -p /home/ubuntu/app
-
-              # Downloading app.py from S3
-              # must first aws s3 cp /Users/andy/ws/projects/andy/tfgha/src/tfgha/app.py s3://proquickly/apps/tfgha/app.py
-              aws s3 cp s3://proquickly/apps/tfgha/app.py /home/ubuntu/app/app.py
-
+              cat <<EOL > /home/ubuntu/app/app.py
+              from flask import Flask
+              app = Flask(__name__)
+              @app.route('/')
+              def hello():
+                  return "Hello from Python on AWS via terraform in our lesson"
+              if __name__ == '__main__':
+                  app.run(host='0.0.0.0', port=5000)
+              EOL
               cd /home/ubuntu/app
               nohup python3 app.py &
               EOF
