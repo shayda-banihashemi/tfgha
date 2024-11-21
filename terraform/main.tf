@@ -9,15 +9,13 @@ resource "aws_instance" "py_server" {
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update
-              sudo apt-get install -y python3 python3-pip
+              sudo apt-get install -y python3 python3-pip git
               pip3 install flask requests
-              mkdir -p /home/ubuntu/app
 
-              # Downloading app.py from S3
-              # must first aws s3 cp /Users/andy/ws/projects/andy/tfgha/src/tfgha/app.py s3://proquickly/apps/tfgha/app.py
-              aws s3 cp s3://proquickly/apps/tfgha/app.py /home/ubuntu/app/app.py
+              # Clone the GitHub repository
+              git clone https://github.com/proquickly/tfgha.git /home/ubuntu/app
 
-              cd /home/ubuntu/app
+              cd /home/ubuntu/app/src/thfgha
               nohup python3 app.py &
               EOF
 
