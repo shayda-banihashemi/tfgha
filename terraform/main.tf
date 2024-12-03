@@ -14,7 +14,7 @@ resource "aws_instance" "py_server" {
 
               # Clone the GitHub repository
               cd /home/ubuntu
-              git clone https://github.com/proquickly/tfgha.git .
+              git clone https://github.com/proquickly/tfgha.git
               cd /home/ubuntu/tfgha/src/tfgha
               nohup python3 app.py &
               EOF
