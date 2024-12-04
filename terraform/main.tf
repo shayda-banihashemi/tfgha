@@ -24,10 +24,10 @@ resource "aws_instance" "py_server" {
     Name = "FlaskAppInstance"
   }
 
-  vpc_security_group_ids = [aws_security_group.allow_http.id]
+  vpc_security_group_ids = [aws_security_group.allow_http1.id]
 }
 
-resource "aws_security_group" "allow_http" {
+resource "aws_security_group" "allow_http1" {
   name        = "allow_http_flask_web"
   description = "Allow inbound HTTP traffic"
 
