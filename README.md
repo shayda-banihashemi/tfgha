@@ -46,5 +46,4 @@ eg: https://github.com/proquickly/<your-repo-name>/settings/secrets/actions
 get your aws keys from your account:
 https://us-east-1.console.aws.amazon.com/iam/home?region=<your-region>#/users/details/<your-user-name>?section=permissions
 
-
 this now runs locally - updated aws config
