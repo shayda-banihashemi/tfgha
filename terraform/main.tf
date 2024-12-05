@@ -40,10 +40,12 @@ resource "aws_instance" "py_server" {
               cd /home/ubuntu
               git clone https://github.com/proquickly/tfgha.git
               cd /home/ubuntu/tfgha
+
+              /home/ubuntu/.local/bin/poetry lock
               /home/ubuntu/.local/bin/poetry install
               cd /home/ubuntu/tfgha/src/tfgha
 
-              nohup /home/ubuntu/.local/bin/poetry run python3 app.py &
+              nohup python3 app.py &
               EOF
 
   tags = {
