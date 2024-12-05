@@ -3,8 +3,8 @@ provider "aws" {
 }
 
  resource "aws_key_pair" "deployer" {
-   key_name   = "deployer-key" # Set this to any descriptive name you prefer
-   public_key = file("id_rsa.pub")  # Path to your public key file
+   key_name   = "deployer-key"
+   public_key = file("id_rsa.pub")
  }
 
    resource "aws_security_group" "allow_ssh" {
@@ -34,7 +34,7 @@ resource "aws_instance" "py_server" {
               #!/bin/bash
               sudo apt-get update
               sudo apt-get install -y python3 python3-pip git curl
-              python3 -m venv /home/ubuntu/sys
+
               python3 -m pip install -U poetry
 
               cd /home/ubuntu
