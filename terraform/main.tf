@@ -4,7 +4,7 @@ provider "aws" {
 
  resource "aws_key_pair" "deployer" {
    key_name   = "deployer-key" # Set this to any descriptive name you prefer
-   public_key = file("~/.ssh/id_rsa.pub")  # Path to your public key file
+   public_key = file("/Users/andy/.ssh/id_rsa.pub")  # Path to your public key file
  }
 
    resource "aws_security_group" "allow_ssh" {
