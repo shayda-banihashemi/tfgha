@@ -47,3 +47,14 @@ get your aws keys from your account:
 https://us-east-1.console.aws.amazon.com/iam/home?region=<your-region>#/users/details/<your-user-name>?section=permissions
 
 this now runs locally - updated aws config
+
+
+Add your PUBLIC ssh key ONLY to the terraform directory and the main.tf will use it to login to the EC2 instance interactively from local laptop. ss ubuntu@ipaddress
+as usual.
+
+Now that poetry is used for python this will deploy any python project that
+is setup correctly with poetry.
+
+TODO: install the project as a module with poetry build and pip or poetry install from the dist dir whl file.
+
+Also note that the dealy in deployment during the time the EC2 instance is up is caused by the time it takes to clone the github repo.
