@@ -11,13 +11,12 @@ resource "aws_instance" "py_server" {
               sudo apt-get update
               sudo apt-get install -y python3 python3-pip git
               curl -sSL https://install.python-poetry.org | python3 -
-              echo "/home/ubuntu/.local/bin" >> $GITHUB_PATH
 
               # Clone the GitHub repository
               cd /home/ubuntu
               git clone https://github.com/proquickly/tfgha.git
               cd /home/ubuntu/tfgha
-              poetry install
+              /home/ubuntu/.local/bin/poetry install
               cd /home/ubuntu/tfgha/src/tfgha
 
               nohup python3 app.py &
