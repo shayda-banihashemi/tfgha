@@ -37,16 +37,15 @@ resource "aws_instance" "py_server" {
               python3 -m venv /home/ubuntu/sys
               python3 -m pip install -U poetry
 
-              # Clone the GitHub repository
               cd /home/ubuntu
               git clone https://github.com/proquickly/tfgha.git
               cd /home/ubuntu/tfgha
 
-              /home/ubuntu/.local/bin/poetry lock
-              /home/ubuntu/.local/bin/poetry install
+              /usr/local/bin/poetry lock
+              /usr/local/bin/poetry install
               cd /home/ubuntu/tfgha/src/tfgha
 
-              nohup /home/ubuntu/.local/bin/poetry run python app.py &
+              nohup poetry run python app.py &
               EOF
 
   tags = {
