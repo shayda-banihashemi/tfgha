@@ -9,7 +9,7 @@ resource "aws_instance" "py_server" {
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update
-              sudo apt-get install -y python3 python3-pip git
+              sudo apt-get install -y python3 python3-pip git curl
               curl -sSL https://install.python-poetry.org | python3 -
 
               # Clone the GitHub repository
@@ -19,7 +19,7 @@ resource "aws_instance" "py_server" {
               /home/ubuntu/.local/bin/poetry install
               cd /home/ubuntu/tfgha/src/tfgha
 
-              nohup python3 app.py &
+              nohup /home/ubuntu/.local/bin/poetry run python3 app.py &
               EOF
 
   tags = {
