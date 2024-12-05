@@ -3,14 +3,33 @@ provider "aws" {
 }
 
  resource "aws_key_pair" "deployer" {
-   key_name   = "my-key-pair" # Set this to any descriptive name you prefer
+   key_name   = "deployer-key" # Set this to any descriptive name you prefer
    public_key = file("~/.ssh/id_rsa.pub")  # Path to your public key file
  }
+
+   resource "aws_security_group" "allow_ssh" {
+     name        = "allow_ssh"
+     description = "Allow SSH inbound traffic"
+
+     ingress {
+       from_port   = 22
+       to_port     = 22
+       protocol    = "tcp"
+       cidr_blocks = ["0.0.0.0/0"]  # Be cautious with this setting; restrict to specific IPs if possible
+     }
+
+     egress {
+       from_port   = 0
+       to_port     = 0
+       protocol    = "-1"
+       cidr_blocks = ["0.0.0.0/0"]
+     }
+   }
 
 resource "aws_instance" "py_server" {
   ami           = "ami-06946f6c9b153d494"
   instance_type = "t2.micro"
-  key_name = aws_key_pair
+  key_name = aws_key_pair.deployer.key_name
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update
@@ -34,25 +53,6 @@ resource "aws_instance" "py_server" {
   vpc_security_group_ids = [aws_security_group.allow_http.id,
     aws_security_group.allow_ssh.id]
 }
-
-   resource "aws_security_group" "allow_ssh" {
-     name        = "allow_ssh"
-     description = "Allow SSH inbound traffic"
-
-     ingress {
-       from_port   = 22
-       to_port     = 22
-       protocol    = "tcp"
-       cidr_blocks = ["0.0.0.0/0"]  # Be cautious with this setting; restrict to specific IPs if possible
-     }
-
-     egress {
-       from_port   = 0
-       to_port     = 0
-       protocol    = "-1"
-       cidr_blocks = ["0.0.0.0/0"]
-     }
-   }
 
 resource "aws_security_group" "allow_http" {
   name        = "allow_http_flask_web_app"
