@@ -32,18 +32,19 @@ resource "aws_instance" "py_server" {
   key_name = aws_key_pair.deployer.key_name
   user_data = <<-EOF
               #!/bin/bash
+              PROJ=tfgha
               sudo apt-get update
               sudo apt-get install -y python3 python3-pip git curl
 
               python3 -m pip install -U poetry
 
               cd /home/ubuntu
-              git clone https://github.com/proquickly/tfgha.git
-              cd /home/ubuntu/tfgha
+              git clone https://github.com/proquickly/$PROJ.git
+              cd /home/ubuntu/$PROJ
 
               /usr/local/bin/poetry lock
               /usr/local/bin/poetry install
-              cd /home/ubuntu/tfgha/src/tfgha
+              cd /home/ubuntu/$PROJ/src/$PROJ
 
               nohup poetry run python app.py &
               EOF
