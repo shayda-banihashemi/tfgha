@@ -57,6 +57,4 @@ is setup correctly with poetry.
 
 TODO: install the project as a module with poetry build and pip or poetry install from the dist dir whl file.
 
-TODO: Variable for bash script in main.tf for project and package name etc
-
-Also note that the dealy in deployment during the time the EC2 instance is up is caused by the time it takes to clone the github repo.
+Also note that the delay in deployment during the time the EC2 instance is up is caused by the time it takes to clone the github repo.
