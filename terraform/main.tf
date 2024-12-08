@@ -43,6 +43,7 @@ resource "random_id" "suffix" {
   byte_length = 4
 }
 
+
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key-${random_id.suffix.hex}"
   public_key = file("id_rsa.pub")
