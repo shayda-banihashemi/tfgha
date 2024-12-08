@@ -38,7 +38,6 @@ resource "null_resource" "cleanup_security_groups" {
   }
 }
 
-
 # Add random suffix to avoid conflicts
 resource "random_id" "suffix" {
   byte_length = 4
