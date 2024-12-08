@@ -95,6 +95,7 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
+
 resource "aws_instance" "py_server" {
   ami           = "ami-06946f6c9b153d494"
   instance_type = "t2.micro"
