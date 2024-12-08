@@ -103,7 +103,7 @@ resource "aws_instance" "py_server" {
               #!/bin/bash
 
               PROJ=tfgha
-              POETRY=./local/bin
+              POETRY=/home/ubuntu/.local/bin
               WORKDIR=/home/ubuntu
 
               sudo apt-get update
