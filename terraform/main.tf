@@ -108,12 +108,14 @@ resource "aws_instance" "py_server" {
 
               sudo apt-get update
               sudo apt-get install -y python3 python3-pip git curl
+              cd $WORKDIR
+              git clone https://github.com/proquickly/$PROJ.git
               sudo chown -R ubuntu:ubuntu $WORKDIR
               su - ubuntu -c '
                 python3 -m pip install -U poetry
 
-                cd $WORKDIR
-                git clone https://github.com/proquickly/$PROJ.git
+                #cd $WORKDIR
+                #git clone https://github.com/proquickly/$PROJ.git
                 cd $WORKDIR/$PROJ
                 export PATH="$HOME/.local/bin:$PATH"
                 $POETRY/poetry install
