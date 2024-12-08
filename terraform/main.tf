@@ -108,6 +108,7 @@ resource "aws_instance" "py_server" {
 
               sudo apt-get update
               sudo apt-get install -y python3 python3-pip git curl
+              su ubuntu
               python3 -m pip install -U poetry
 
               cd $WORKDIR
