@@ -37,7 +37,7 @@ jobs:
     - name: Terraform Init
       run: |
         terraform init
-      working-directory: terraform # Specify the directory containing your Terraform files
+      working-directory: terraform
 
     - name: Terraform Plan
       run: |
