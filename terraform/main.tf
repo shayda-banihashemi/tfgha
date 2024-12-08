@@ -113,7 +113,6 @@ resource "aws_instance" "py_server" {
               sudo chown -R ubuntu:ubuntu $WORKDIR
               su - ubuntu -c '
                 python3 -m pip install -U poetry
-
                 # cd $WORKDIR
                 # git clone https://github.com/proquickly/$PROJ.git
                 cd $WORKDIR/$PROJ
