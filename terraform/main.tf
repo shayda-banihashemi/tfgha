@@ -64,21 +64,24 @@ resource "aws_instance" "py_server" {
   key_name      = aws_key_pair.deployer.key_name
   user_data     = <<-EOF
               #!/bin/bash
+
               PROJ=tfgha
+              POETRY=/usr/local/bin
               WORKDIR=/home/ubuntu
+
               sudo apt-get update
               sudo apt-get install -y python3 python3-pip git curl
-              curl -sSL https://install.python-poetry.org | python3 -
-              # python3 -m pip install -U poetry
+              #curl -sSL https://install.python-poetry.org | python3 -
+              python3 -m pip install -U poetry
 
               cd $WORKDIR
               git clone https://github.com/proquickly/$PROJ.git
               cd $WORKDIR/$PROJ
               export PATH="$HOME/.local/bin:$PATH"
-              poetry install
+              $POETRY/poetry install
               cd $WORKDIR/$PROJ/src/$PROJ
 
-              nohup poetry run python app.py &
+              nohup $POETRY/poetry run python app.py &
               EOF
 
   tags = {
