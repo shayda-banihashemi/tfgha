@@ -1,4 +1,5 @@
 from flask import Flask
+import chromadb
 
 app = Flask(__name__)
 
