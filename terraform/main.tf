@@ -89,22 +89,3 @@ resource "aws_instance" "py_server" {
     aws_security_group.allow_http.id, aws_security_group.allow_ssh.id
   ]
 }
-
-resource "aws_security_group" "allow_http" {
-  name        = "allow_http_flask_web_app"
-  description = "Allow inbound HTTP traffic"
-
-  ingress {
-    from_port = 5000
-    to_port   = 5000
-    protocol  = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
