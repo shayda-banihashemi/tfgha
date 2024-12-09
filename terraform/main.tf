@@ -115,6 +115,7 @@ resource "aws_instance" "py_server" {
                 python3 -m pip install -U poetry
                 cd $WORKDIR/$PROJ
                 export PATH="$WORKDIR/.local/bin:$PATH"
+                rm poetry.lock
                 $POETRY/poetry install
                 cd $WORKDIR/$PROJ/src/$PROJ
 
