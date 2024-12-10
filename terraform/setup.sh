@@ -32,7 +32,7 @@ if ! sudo chown -R ubuntu:ubuntu "$WORKDIR"; then
 fi
 
 # Run as the ubuntu user
-sudo -u ubuntu bash <<EOF
+sudo -u ubuntu bash
   set -e
   python3 -m pip install -U poetry
   cd "$WORKDIR/$PROJ"
