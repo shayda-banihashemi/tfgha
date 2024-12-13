@@ -36,7 +36,7 @@ sudo -u ubuntu bash
   set -e
   python3 -m pip install -U poetry
   cd "$WORKDIR/$PROJ"
-  export PATH="$WORKDIR/.local/bin:\$PATH"
+  export PATH="$WORKDIR/.local/bin:/\$PATH"
   [ -f poetry.lock ] && rm poetry.lock
   $POETRY/poetry install
   cd "$WORKDIR/$PROJ/src/$PROJ"
