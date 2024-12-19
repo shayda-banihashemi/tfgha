@@ -1,5 +1,17 @@
 provider "aws" {
-  region = "us-west-2"
+  region = var.aws_region
+}
+
+variable "aws_region" {
+  description = "The AWS region to deploy resources in"
+  type        = string
+  default     = "us-west-2"
+}
+
+variable "public_key_path" {
+  description = "Path to the public key file"
+  type        = string
+  default     = "id_rsa.pub"
 }
 
 data "aws_security_groups" "all" {
@@ -43,10 +55,9 @@ resource "random_id" "suffix" {
   byte_length = 4
 }
 
-
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key-${random_id.suffix.hex}"
-  public_key = file("id_rsa.pub")
+  public_key = file(var.public_key_path)
 }
 
 resource "aws_security_group" "allow_ssh" {
