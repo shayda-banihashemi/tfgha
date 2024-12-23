@@ -2,7 +2,7 @@
 
 PROJ="tfgha"
 POETRY="/usr/local/bin"
-WORKDIR="/home/ubuntu"
+WORKDIR="/home/ubuntu/ws"
 
 # Update package lists
 if ! sudo apt-get update; then
