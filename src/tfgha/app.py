@@ -9,7 +9,7 @@ from chromadb.config import Settings
 from chromadb.utils import embedding_functions
 import functools
 import time
-#comment1
+#comment2
 def timer(func):
     @functools.wraps(func)
     def wrapper_timer(*args, **kwargs):
